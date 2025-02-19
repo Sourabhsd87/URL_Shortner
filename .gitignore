@@ -1,0 +1,54 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.out
+*.app
+*.bin
+
+# Go modules and dependencies
+/vendor/
+/bin/
+/pkg/
+go.sum
+go.mod
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*.bak
+*.tmp
+
+# Logs & Debugging
+*.log
+*.test
+*.prof
+*.trace
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.DS_Store
+
+# Cache & Build Artifacts
+*.o
+*.a
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+*.swn
+cover.out
+node_modules/
+
+# Docker & Kubernetes
+docker-compose.override.yml
+*.container
+*.tar
