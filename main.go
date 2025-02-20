@@ -14,7 +14,9 @@ func main() {
 	config.LoggerInit(dir)
 	db.DbInit()
 	config.InitRedis()
+	config.InitOAuth()
 
 	r := routes.SetupRouter()
 	r.Run(config.Host + ":" + config.Port)
 }
+

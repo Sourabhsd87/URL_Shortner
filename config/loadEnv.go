@@ -10,19 +10,22 @@ import (
 )
 
 var (
-	Host                string
-	Port                string
-	Db_Host             string
-	Db_Port             string
-	Db_User             string
-	Db_Password         string
-	Db_Name             string
-	Db_TimeZone         string
-	DBConnectionTimeOut string
-	Redis_Host          string
-	Redis_Port          string
-	Redis_Db            int
-	Log_level           string
+	Host                 string
+	Port                 string
+	Db_Host              string
+	Db_Port              string
+	Db_User              string
+	Db_Password          string
+	Db_Name              string
+	Db_TimeZone          string
+	DBConnectionTimeOut  string
+	Redis_Host           string
+	Redis_Port           string
+	Redis_Db             int
+	Log_level            string
+	Google_Client_ID     string
+	Google_Client_Secret string
+	Google_Redirect_URL  string
 )
 
 func LoadEnv() error {
@@ -45,6 +48,9 @@ func LoadEnv() error {
 		"HOST":                  &Host,
 		"PORT":                  &Port,
 		"LOG_LEVEL":             &Log_level,
+		"GOOGLE_CLIENT_ID":      &Google_Client_ID,
+		"GOOGLE_CLIENT_SECRET":  &Google_Client_Secret,
+		"GOOGLE_REDIRECT_URL":   &Google_Redirect_URL,
 	}
 	for key, value := range envVars {
 		val := os.Getenv(key)

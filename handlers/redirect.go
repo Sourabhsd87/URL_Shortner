@@ -34,18 +34,30 @@ func Redirect(c *gin.Context) {
 		config.RedisClient.Set(context.Background(), shortCode, url.LongURL, 24*time.Hour)
 		longURL = url.LongURL
 
-		url.Clicks++
-		config.Logger.WithFields(logrus.Fields{
-			"URL":    url.LongURL,
-			"clicks": url.Clicks,
-		})
-
-		if err := db.DB.Save(&url).Error; err != nil {
-			config.Logger.Error("Error updating URL clicks: " + err.Error())
-		}
-
 		config.Logger.Info("URL fetched from database and cached in Redis")
 	}
+
+	var url models.URL
+	if err := db.DB.Where("short_url = ?", shortCode).First(&url).Error; err != nil {
+		config.Logger.Error("URL not found in database: " + err.Error())
+		c.JSON(http.StatusNotFound, models.Response{
+			StatusCode: http.StatusNotFound,
+			Message:    "URL not found",
+			Data:       map[string]interface{}{},
+		})
+		return
+	}
+
+	url.Clicks = url.Clicks + 1
+	config.Logger.WithFields(logrus.Fields{
+		"URL":    url.LongURL,
+		"clicks": url.Clicks,
+	})
+
+	if err := db.DB.Save(&url).Error; err != nil {
+		config.Logger.Error("Error updating URL clicks: " + err.Error())
+	}
+
 	config.Logger.Info("Redirecting to long URL: " + longURL)
 	c.Redirect(http.StatusFound, longURL)
 }
